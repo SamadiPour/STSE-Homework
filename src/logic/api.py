@@ -13,8 +13,8 @@ class API:
     # .full_text
     # .created_at
     # .lang
+    # .id_str
     # .user.screen_name --username
-    # .user.name
     # .user.id
     def get_tweet_by_id(self, tweet_id: str):
         return self.api.get_status(tweet_id, tweet_mode='extended')
