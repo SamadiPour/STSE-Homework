@@ -1,4 +1,7 @@
+import logging
+
 import tweepy as tweepy
+from tweepy import TweepError
 
 from src.env import *
 
@@ -17,4 +20,8 @@ class API:
     # .user.screen_name --username
     # .user.id
     def get_tweet_by_id(self, tweet_id: str):
-        return self.api.get_status(tweet_id, tweet_mode='extended')
+        try:
+            return self.api.get_status(tweet_id, tweet_mode='extended')
+        except TweepError as e:
+            logging.warning(tweet_id + ' - ' + e.args[0][0]['message'])
+            pass
