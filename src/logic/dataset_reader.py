@@ -2,24 +2,21 @@ import csv
 
 
 class DatasetReader:
+    test_csv = 'isarcasm_test.csv'
+    train_csv = 'isarcasm_train.csv'
+
     def __init__(self):
         self.path = '../dataset/'
-        self.test_csv_name = 'isarcasm_test.csv'
-        self.train_csv_name = 'isarcasm_train.csv'
 
-    def read_test_dataset(self):
-        f = open(self.path + self.test_csv_name, newline='')
+    def read_dataset(self, file):
+        f = open(self.path + file, newline='')
         csv_reader = csv.reader(f)
 
         # Skip title row
         next(csv_reader)
-        return csv_reader
 
-    def read_train_dataset(self):
-        f = open(self.path + self.train_csv_name, newline='')
-        csv_reader = csv.reader(f)
+        rows = []
+        for row in csv_reader:
+            rows.append(row)
 
-        # Skip title row
-        next(csv_reader)
-        return csv_reader
-
+        return rows
