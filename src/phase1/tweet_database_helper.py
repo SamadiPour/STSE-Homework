@@ -1,3 +1,4 @@
+import os
 import sqlite3
 
 from src.config import root_dir
@@ -9,7 +10,8 @@ class TweetDatabaseHelper:
     def __init__(self, name) -> None:
         super().__init__()
 
-        self.connection = sqlite3.connect(f'{root_dir}/dataset/{name}.db')
+        path = os.path.join(root_dir, 'dataset', f"{name}.db")
+        self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
 
         self.__create()
