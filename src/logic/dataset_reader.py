@@ -2,14 +2,14 @@ import csv
 
 
 class DatasetReader:
-    test_csv = 'isarcasm_test.csv'
-    train_csv = 'isarcasm_train.csv'
+    test_csv = 'isarcasm_test'
+    train_csv = 'isarcasm_train'
 
     def __init__(self):
         self.path = '../dataset/'
 
     def read_dataset(self, file):
-        f = open(self.path + file, newline='')
+        f = open(self.path + file + '.csv', newline='')
         csv_reader = csv.reader(f)
 
         # Skip title row
