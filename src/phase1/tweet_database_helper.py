@@ -42,16 +42,3 @@ class TweetDatabaseHelper:
         );
         """
         self.cursor.execute(query)
-
-    def __insert(self, data):
-        self.cursor.execute(
-            f'INSERT INTO {TweetDatabaseHelper.__table_name} '
-            f'VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
-            data
-        )
-
-    def __remove(self, user_id):
-        self.cursor.execute(
-            f'DELETE FROM {TweetDatabaseHelper.__table_name} '
-            f'WHERE user_id = {user_id};'
-        )
