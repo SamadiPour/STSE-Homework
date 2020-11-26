@@ -42,3 +42,10 @@ class TweetDatabaseHelper:
         );
         """
         self.cursor.execute(query)
+
+    def __insert(self, data):
+        self.cursor.execute(
+            f'INSERT INTO {TweetDatabaseHelper.__table_name} '
+            f'VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
+            data
+        )
