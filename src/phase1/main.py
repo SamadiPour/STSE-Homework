@@ -3,7 +3,7 @@ import logging
 from progressbar import ProgressBar
 
 from src.logic.api import API
-from src.logic.config import *
+from src.config import *
 from src.logic.dataset_reader import DatasetReader
 from src.phase1.tweet_database_helper import TweetDatabaseHelper
 

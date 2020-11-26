@@ -1,12 +1,15 @@
 import sqlite3
 
+from src.config import root_dir
+
+
 class TweetDatabaseHelper:
     __table_name = 'tweets'
 
     def __init__(self, name) -> None:
         super().__init__()
 
-        self.connection = sqlite3.connect(f'{name}.db')
+        self.connection = sqlite3.connect(f'{root_dir}/dataset/{name}.db')
         self.cursor = self.connection.cursor()
 
         self.__create()
@@ -26,6 +29,11 @@ class TweetDatabaseHelper:
             return True
         except sqlite3.IntegrityError:
             return False
+
+    def get_all(self):
+        return self.cursor.execute(
+            f"SELECT * FROM {TweetDatabaseHelper.__table_name};"
+        ).fetchall()
 
     def __create(self):
         query = f"""
