@@ -2,9 +2,6 @@ import csv
 
 
 class DatasetReader:
-    test_csv = 'isarcasm_test'
-    train_csv = 'isarcasm_train'
-
     def __init__(self):
         self.path = '../dataset/'
 

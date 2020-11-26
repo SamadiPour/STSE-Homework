@@ -1,7 +1,9 @@
 import logging
+
 from progressbar import ProgressBar
 
 from src.logic.api import API
+from src.logic.config import *
 from src.logic.dataset_reader import DatasetReader
 from src.phase1.tweet_database_helper import TweetDatabaseHelper
 
@@ -13,8 +15,8 @@ if __name__ == '__main__':
     # Initialize
     api = API()
     dataset = DatasetReader()
-    items = dataset.read_dataset(DatasetReader.train_csv)
-    database = TweetDatabaseHelper(DatasetReader.train_csv)
+    items = dataset.read_dataset(train_csv)
+    database = TweetDatabaseHelper(test_csv)
 
     with ProgressBar(max_value=len(items) - 1, redirect_stdout=True) as bar:
         for index, item in zip(range(len(items)), items):
