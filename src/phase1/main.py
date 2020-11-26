@@ -14,10 +14,10 @@ if __name__ == '__main__':
 
     # Initialize
     api = API()
-    dataset = DatasetReader()
-    items = dataset.read_dataset(train_csv)
+    dataset = DatasetReader(train_csv)
     database = TweetDatabaseHelper(test_csv)
 
+    items = dataset.read_dataset()
     with ProgressBar(max_value=len(items) - 1, redirect_stdout=True) as bar:
         for index, item in zip(range(len(items)), items):
             # get tweet
