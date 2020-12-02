@@ -1,9 +1,11 @@
 import re
+import unicodedata
 
+import contractions as contractions
 import emoji
 import nltk
-
 from autocorrect import Speller
+
 from src.config import *
 from src.phase1.tweet_database_helper import TweetDatabaseHelper
 
@@ -22,6 +24,12 @@ if __name__ == '__main__':
     for item in database.get_all():
         text = item[5]
         # print(text)
+
+        # Make words lowercase
+        text = text.lower()
+
+        # Fix contractions  (you're -> you are)
+        text = contractions.fix(text)
 
         # Remove usernames
         text = re.sub(r'(^|[^@\w])@(\w{1,15})\b', '', text).strip()
@@ -53,9 +61,6 @@ if __name__ == '__main__':
                       "]+", '', text)
         text = ''.join([char for char in text if char not in emoji.UNICODE_EMOJI]).strip()
 
-        # Make words lowercase
-        text = text.lower()
-
         # Replace unusual chars
         text = re.sub(r'’', '\'', text).strip()
         text = re.sub(r'[“”]', '\"', text).strip()
@@ -67,11 +72,19 @@ if __name__ == '__main__':
         # Tokenize
         words = nltk.tokenize.word_tokenize(text)
 
-        # remove numbers
+        # Remove non-ASCII characters from list of tokenized words
+        new_words = []
+        for word in words:
+            new_word = unicodedata.normalize('NFKD', word).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+            if new_word != '':
+                new_words.append(new_word)
+        words = new_words
+
+        # Remove numbers
         words = [x for x in words if not (x.isdigit() or x[0] == '-' and x[1:].isdigit())]
 
         # Fix typos
-        words = [spell(word) for word in words]
+        # words = [spell(re.sub(r'(.)\1+', r'\1\1', word)) for word in words]
 
         # Remove stop words
         stop_words = nltk.corpus.stopwords.words('english')
