@@ -5,6 +5,7 @@ import contractions as contractions
 import emoji
 import nltk
 from autocorrect import Speller
+from nltk.tokenize.casual import reduce_lengthening
 
 from src.config import *
 from src.phase1.tweet_database_helper import TweetDatabaseHelper
@@ -84,7 +85,7 @@ if __name__ == '__main__':
         words = [x for x in words if not (x.isdigit() or x[0] == '-' and x[1:].isdigit())]
 
         # Fix typos
-        # words = [spell(re.sub(r'(.)\1+', r'\1\1', word)) for word in words]
+        # words = [spell(reduce_lengthening(word)) for word in words]
 
         # Remove stop words
         stop_words = nltk.corpus.stopwords.words('english')
