@@ -25,3 +25,39 @@ class API:
         except TweepError as e:
             logging.warning(tweet_id + ' - ' + e.args[0][0]['message'])
             pass
+
+    def get_user_by_id(self, user_id: str):
+        try:
+            return self.api.get_user(user_id)
+        except TweepError as e:
+            # logging.warning(user_id + ' - ' + e.args[0][0]['message'])
+            pass
+
+    def get_tweet_by_user_id(self, user_id: str, n: int):
+        try:
+            return self.api.user_timeline(user_id, count=n, tweet_mode="extended", exclude_replies=False,
+                                          include_rts=False)
+        except TweepError as e:
+            # logging.warning(user_id + ' - ' + e.args[0][0]['message'])
+            pass
+
+    def get_followers_by_user_id(self, user_id: str, n: int):
+        try:
+            return self.api.followers(user_id, count=n)
+        except TweepError as e:
+            # logging.warning(user_id + ' - ' + e.args[0][0]['message'])
+            pass
+
+    def get_following_by_user_id(self, user_id: str, n: int):
+        try:
+            return self.api.friends(user_id, count=n)
+        except TweepError as e:
+            # logging.warning(user_id + ' - ' + e.args[0][0]['message'])
+            pass
+
+    def get_subscribed_lists(self, user_id: str, n: int):
+        try:
+            return self.api.lists_all(user_id=user_id, count=n)
+        except TweepError as e:
+            # logging.warning(user_id + ' - ' + e.args[0][0]['message'])
+            pass
