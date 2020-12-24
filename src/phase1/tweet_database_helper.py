@@ -37,6 +37,11 @@ class TweetDatabaseHelper:
             f"SELECT * FROM {TweetDatabaseHelper.__table_name};"
         ).fetchall()
 
+    def get_distinct_users(self):
+        return self.cursor.execute(
+            f"SELECT distinct user_id FROM {TweetDatabaseHelper.__table_name};"
+        ).fetchall()
+
     def __create(self):
         query = f"""
         create table IF NOT EXISTS {TweetDatabaseHelper.__table_name}

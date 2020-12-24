@@ -21,6 +21,7 @@ def get_personal_info(user):
         pass
 
     return {
+        'id': result.id,
         'name': result.name,
         'username': result.screen_name,
         'location': result.location,
@@ -60,6 +61,8 @@ def get_tweets(user, n):
             'tweet_ret_count': tweet.retweet_count,
             'tweet_geo': tweet.geo,
             'tweet_coordinates': tweet.coordinates,
+            'is_quote': tweet.is_quote_status,
+            'lang': tweet.lang,
             'user_mentions': [
                 {
                     'id': item['id'],
@@ -126,15 +129,14 @@ if __name__ == '__main__':
     api = API()
     database = TweetDatabaseHelper(train_csv)
 
-    for item in database.get_all()[:10]:
-        tweet_id = item[0]
-        user_id = item[1]
+    for item in database.get_distinct_users()[85 + 2:]:
+        user_id = item[0]
 
         personal_info = get_personal_info(user_id)
-        tweets = get_tweets(user_id, 50)
-        followers = get_followers(user_id, 50)
-        following = get_following(user_id, 50)
-        lists = get_subscribed_lists(user_id, 50)
+        tweets = get_tweets(user_id, 100)
+        followers = get_followers(user_id, 100)
+        following = get_following(user_id, 100)
+        lists = get_subscribed_lists(user_id, 100)
 
         json_result = json.dumps({
             'user': personal_info,
@@ -143,4 +145,4 @@ if __name__ == '__main__':
             'following': following,
             'lists': lists,
         })
-        print(json_result)
+        print(json_result + ',')
